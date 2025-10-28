@@ -6,6 +6,18 @@ from torchvision.transforms import InterpolationMode
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
+import os
+import requests
+
+MODEL_PATH = "moonet_final_scripted.pt"
+MODEL_URL = "https://github.com/notyellowgiraffee/moonetapi/releases/download/latest/moonet_final_scripted.pt"
+
+if not os.path.exists(MODEL_PATH):
+    print("Downloading model...")
+    response = requests.get(MODEL_URL)
+    open(MODEL_PATH, "wb").write(response.content)
+    print("Download complete!")
+
 
 app = FastAPI(title="MooNet Classification API", version="1.0")
 
